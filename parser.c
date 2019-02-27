@@ -67,7 +67,7 @@ void parse_file(char * filename, struct matrix * transform, struct matrix * edge
     char line[256];
     char ** args;
 
-    struct color c;
+    color c;
     c.red = 255;
 
     clear_screen(s);
@@ -89,15 +89,13 @@ void parse_file(char * filename, struct matrix * transform, struct matrix * edge
         } else if (strcmp(line, "scale") == 0) {
             fgets(line, 1024, f);
             args = parse_args(line);
-            struct matrix * m = new_matrix(4, 4);
-            scale(m, atof(args[0]), atof(args[1]), atof(args[2]));
+            struct matrix * m = make_scale(atof(args[0]), atof(args[1]), atof(args[2]));
             matrix_mult(m, transform);
             free_matrix(m);
         } else if (strcmp(line, "move") == 0) {
             fgets(line, 1024, f);
             args = parse_args(line);
-            struct matrix * m = new_matrix(4, 4);
-            translate(m, atof(args[0]), atof(args[1]), atof(args[2]));
+            struct matrix * m = make_translate(atof(args[0]), atof(args[1]), atof(args[2]));
             matrix_mult(m, transform);
             free_matrix(m);
         } else if (strcmp(line, "apply") == 0) {
@@ -105,14 +103,13 @@ void parse_file(char * filename, struct matrix * transform, struct matrix * edge
         } else if (strcmp(line, "rotate") == 0) {
             fgets(line, 1024, f);
             args = parse_args(line);
-            struct matrix * m = new_matrix(4, 4);
 
             if (args[0][0] == 'x') {
-                rotateX(m, atof(args[1]));
+                struct matrix * m = make_rotX(atof(args[1]));
             } else if (args[0][0] == 'y') {
-                rotateY(m, atof(args[1]));
+                struct matrix * m = make_rotY(atof(args[1]));
             } else if (args[0][0] == 'z') {
-                rotateZ(m, atof(args[1]));
+                struct matrix * m = make_rotZ(atof(args[1]));
             } else {
                 printf("s% is not a valid axis of rotation\n", args[0]);
                 return 1;
