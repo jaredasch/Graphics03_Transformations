@@ -104,15 +104,15 @@ void parse_file(char * filename, struct matrix * transform, struct matrix * edge
             fgets(line, 1024, f);
             args = parse_args(line);
 
+            struct matrix * m;
             if (args[0][0] == 'x') {
-                struct matrix * m = make_rotX(atof(args[1]));
+                m = make_rotX(atof(args[1]));
             } else if (args[0][0] == 'y') {
-                struct matrix * m = make_rotY(atof(args[1]));
+                m = make_rotY(atof(args[1]));
             } else if (args[0][0] == 'z') {
-                struct matrix * m = make_rotZ(atof(args[1]));
+                m = make_rotZ(atof(args[1]));
             } else {
-                printf("s% is not a valid axis of rotation\n", args[0]);
-                return 1;
+                printf("%s is not a valid axis of rotation\n", args[0]);
             }
 
             matrix_mult(m, transform);
