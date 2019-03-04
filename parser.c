@@ -38,7 +38,7 @@ The file follows the following format:
          scale: create a scale matrix,
                 then multiply the transform matrix by the scale matrix -
                 takes 3 arguments (sx, sy, sz)
-         translate: create a translation matrix,
+         move: create a translation matrix,
                     then multiply the transform matrix by the translation matrix -
                     takes 3 arguments (tx, ty, tz)
          rotate: create a rotation matrix,
@@ -125,6 +125,8 @@ void parse_file(char * filename, struct matrix * transform, struct matrix * edge
             draw_lines(edges, s, c);
             save_extension(s, args[0]);
             printf("Image saved to %s\n", args[0]);
+        } else if(strcmp(line, "display") == 0){
+            display(s);
         } else if(strcmp(line, "quit") == 0) {
             return;
         }
