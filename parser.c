@@ -121,11 +121,20 @@ void parse_file(char * filename, struct matrix * transform, struct matrix * edge
             fgets(line, 1024, f);
             args = parse_args(line);
 
+            struct matrix * m = make_scale(2, 2, 1);
+            // m->m[0][2] = 0.2;
+            // m->m[1][2] = 0.2;
+            // m->m[3][2] = 0.2;
+            m->m[3][3] = 0;
+            matrix_mult(m, edges);
+
             clear_screen(s);
             draw_lines(edges, s, c);
             save_extension(s, args[0]);
             printf("Image saved to %s\n", args[0]);
         } else if(strcmp(line, "display") == 0){
+            clear_screen(s);
+            draw_lines(edges, s, c);
             display(s);
         } else if(strcmp(line, "quit") == 0) {
             return;
